@@ -1,5 +1,10 @@
 from django.urls import path
-from .views import MoviesReviewsPageView
+from . import views
+
+app_name = 'reviews'
+
 urlpatterns = [
-path('movies/reviews', MoviesReviewsPageView.as_view(), name='reviews'),
+    path('add/<slug:movie_slug>/', views.add_review, name='add_review'),
+    path('edit/<int:pk>/', views.edit_review, name='edit_review'),
+    path('delete/<int:pk>/', views.delete_review, name='delete_review'),
 ]

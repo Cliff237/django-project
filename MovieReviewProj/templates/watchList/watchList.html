@@ -1,1 +1,81 @@
-<h1>watch list</h1>
+{% extends 'movies/base.html' %}
+{% load static %}
+
+{% block title %}My Watchlist - CineRate{% endblock %}
+
+{% block content %}
+    <div class="watchlist-header">
+        <h1>
+            <i class="fas fa-heart"></i> 
+            My Watchlist 
+            <span class="watchlist-count">({{ watchlist_count }})</span>
+        </h1>
+        
+        <div class="header-actions">
+            {% if movies %}
+                <a href="{% url 'watchList:clear_watchlist' %}" 
+                   class="clear-btn"
+                   onclick="return confirm('Clear entire watchlist? This cannot be undone.')">
+                    <i class="fas fa-trash"></i> Clear All
+                </a>
+            {% endif %}
+            
+            <a href="{% url 'movies:movie_list' %}" class="browse-btn">
+                <i class="fas fa-search"></i> Browse More Movies
+            </a>
+        </div>
+    </div>
+
+    {% if movies %}
+        <div class="watchlist-grid">
+            {% for movie in movies %}
+                <div class="watchlist-card">
+                    <div class="poster-container">
+                        {% if movie.poster %}
+                            <img src="{{ movie.poster.url }}" alt="{{ movie.title }}" class="watchlist-poster">
+                        {% else %}
+                            <div class="no-poster">
+                                <i class="fas fa-film"></i>
+                            </div>
+                        {% endif %}
+                        
+                        <a href="{% url 'watchList:remove_from_watchlist' movie.slug %}" 
+                           class="remove-btn"
+                           title="Remove from watchlist"
+                           onclick="return confirm('Remove {{ movie.title }} from watchlist?')">
+                            <i class="fas fa-times"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="watchlist-info">
+                        <h3>{{ movie.title }}</h3>
+                        <p class="meta">
+                            {{ movie.release_date|date:"Y" }} • {{ movie.get_movie_type_display }}
+                        </p>
+                        
+                        <div class="genres">
+                            {% for genre in movie.genres.all %}
+                                <span class="genre-tag">{{ genre.name }}</span>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="card-actions">
+                            <a href="{% url 'movies:movie_detail' movie.slug %}" class="view-btn">
+                                <i class="fas fa-info-circle"></i> View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-watchlist">
+            <i class="fas fa-heart-broken"></i>
+            <h2>Your Watchlist is Empty</h2>
+            <p>Start adding movies you want to watch later!</p>
+            <a href="{% url 'movies:movie_list' %}" class="browse-btn">
+                <i class="fas fa-search"></i> Browse Movies
+            </a>
+        </div>
+    {% endif %}
+{% endblock %}

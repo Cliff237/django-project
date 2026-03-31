@@ -1,0 +1,46 @@
+{% extends 'movies/base.html' %}
+{% load static %}
+
+{% block title %}Write Review - {{ movie.title }} | CineRate{% endblock %}
+
+{% block content %}
+    <a href="{% url 'movies:movie_detail' movie.slug %}" class="back-link">
+        <i class="fas fa-arrow-left"></i> Back to Movie
+    </a>
+
+    <div class="review-form-container">
+        <h1>Write a Review for <span>{{ movie.title }}</span></h1>
+
+        <form method="POST" class="review-form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="reviewer_name">Your Name (Optional)</label>
+                <input type="text" name="reviewer_name" id="reviewer_name" 
+                       value="Anonymous" class="form-input" placeholder="Anonymous">
+            </div>
+
+            <!-- Star Rating -->
+            <div class="form-group">
+                <label>Your Rating</label>
+                <div class="star-rating">
+                    {% for i in "12345"|make_list %}
+                        <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}" required>
+                        <label for="star{{ i }}" title="{{ i }} stars">★</label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="comment">Your Review</label>
+                <textarea name="comment" id="comment" rows="8" 
+                          class="form-textarea" 
+                          placeholder="What did you think about the movie? Be honest..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-paper-plane"></i> Submit Review
+            </button>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,80 @@
+@keyframes posterShine {
+    0% {
+        transform: translateX(-140%);
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(140%);
+        opacity: 0;
+    }
+}
+
+@keyframes cardGlowSpin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes modalPop {
+    from {
+        transform: translateY(14px) scale(0.985);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes filterSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes filterPulse {
+    0%,
+    100% {
+        opacity: 0.65;
+        filter: saturate(1);
+    }
+    50% {
+        opacity: 1;
+        filter: saturate(1.2);
+    }
+}
+
+/* Poster shimmer (overlay on top of poster image) */
+.movie-poster::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0));
+    transform: translateX(-140%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.movie-card:hover .movie-poster::before {
+    animation: posterShine 1.1s ease;
+}
+
+.movie-card::before {
+    transform-origin: center;
+}
+
+.movie-card:hover::before {
+    animation: cardGlowSpin 2.2s linear infinite;
+}
+
+.movie-modal.is-open .movie-modal-dialog {
+    animation: modalPop 0.28s ease both;
+}
+

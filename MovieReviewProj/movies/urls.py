@@ -1,5 +1,9 @@
 from django.urls import path
-from .views import MoviesPageView
+from . import views
+
+app_name = 'movies'
+
 urlpatterns = [
-path('movies/', MoviesPageView.as_view(), name='movie'),
+    path('', views.movie_list, name='movie_list'),                    # /movies/
+    path('<slug:slug>/', views.movie_detail, name='movie_detail'),    # /movies/inception/
 ]

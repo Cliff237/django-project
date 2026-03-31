@@ -1,0 +1,91 @@
+{% extends 'movies/base.html' %}
+{% load static %}
+
+{% block title %}All Movies - CineRate{% endblock %}
+
+{% block content %}
+    <!-- Header -->
+    <div class="page-header">
+        <h1><i class="fas fa-film"></i> Discover Movies</h1>
+        <p class="subtitle">Find your next favorite film from our collection</p>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar" id="filter-bar">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search-input" 
+                   placeholder="Search by movie title...">
+        </div>
+        
+        <select id="genre-filter">
+            <option value="">All Genres</option>
+            {% for genre in genres %}
+                <option value="{{ genre.id }}">{{ genre.name }}</option>
+            {% endfor %}
+        </select>
+
+        <select id="type-filter">
+            <option value="">All Types</option>
+            <option value="movie">Movies</option>
+            <option value="series">Series</option>
+            <option value="animation">Animations</option>
+        </select>
+
+        <button type="button" id="reset-btn" class="reset-btn">
+            <i class="fas fa-undo"></i> Reset
+        </button>
+    </div>
+
+    <!-- Movies Grid -->
+    <div class="movie-grid" id="movie-grid">
+        {% for movie in movies %}
+            <div class="movie-card" 
+                 data-title="{{ movie.title|lower|escape }}"
+                 data-type="{{ movie.movie_type }}"
+                 data-genres="{% for g in movie.genres.all %}{{ g.id }}{% if not forloop.last %},{% endif %}{% endfor %}">
+                
+                <!-- Poster -->
+                <div class="poster-container">
+                    <a href="{% url 'movies:movie_detail' movie.slug %}" class="poster-link">
+                        {% if movie.poster %}
+                            <img src="{{ movie.poster.url }}" 
+                                 alt="{{ movie.title }}"
+                                 loading="lazy">
+                        {% else %}
+                            <div class="no-poster">
+                                <i class="fas fa-film fa-4x"></i>
+                                <p>No Poster</p>
+                            </div>
+                        {% endif %}
+                    </a>
+                </div>
+
+                <!-- Movie Info -->
+                <div class="movie-info">
+                    <a href="{% url 'movies:movie_detail' movie.slug %}" class="movie-title-link">
+                        <div class="movie-title">{{ movie.title }}</div>
+                    </a>
+                    
+                    <p class="movie-meta">
+                        <i class="fas fa-calendar"></i> {{ movie.release_date|date:"Y" }}
+                        <span class="separator">•</span>
+                        <i class="fas fa-film"></i> {{ movie.get_movie_type_display }}
+                    </p>
+                    
+                    <p class="genres">
+                        {% for genre in movie.genres.all %}
+                            {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                </div>
+            </div>
+        {% empty %}
+            <div class="empty-state">
+                <i class="fas fa-film fa-5x"></i>
+                <h2>No movies found</h2>
+                <p>Try adjusting your search or filters</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

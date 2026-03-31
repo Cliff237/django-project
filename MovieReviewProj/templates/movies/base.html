@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Movie Reviews{% endblock %}</title>
+    
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/movies/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/movies/nav.css' %}">
+    <link rel="stylesheet" href="{% static 'css/watchList/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/reviews/style.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{% url 'movies:movie_list' %}" class="logo">
+                <i class="fas fa-film"></i> CineRate
+            </a>
+
+            <div class="nav-links">
+                <a href="{% url 'movies:movie_list' %}" class="nav-link {% if request.resolver_match.url_name == 'movie_list' %}active{% endif %}">
+                    <i class="fas fa-film"></i> Movies
+                </a>
+                
+                <a href="{% url 'watchList:watchlist_view' %}" class="nav-link {% if request.resolver_match.app_name == 'watchlist' %}active{% endif %}">
+                    <i class="fas fa-heart"></i> Watchlist
+                </a>
+
+                <!-- Reviews link (optional - you can link to a general reviews page later) -->
+                <!-- <a href="#" class="nav-link"><i class="fas fa-comments"></i> Reviews</a> -->
+            </div>
+
+            <!-- Right side (will be useful when accounts are added) -->
+            <div class="nav-right">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-user"></i> Guest
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="{% static 'js/movies/main.js' %}"></script>
+</body>
+</html>
