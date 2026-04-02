@@ -1,0 +1,52 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="{% static 'fotawesome/css/all.min.css' %}" />
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Account</title>
+  </head>
+  <body>
+    <div class="form-wrapper">
+      <h1>Login</h1>
+      {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="form-group">
+          <label class="form-label" for="id_username">Email</label>
+          <div class="input-with-icon">
+            <i class="fas fa-envelope"></i>
+            {{ form.username }}
+          </div>
+          {% if form.username.errors %}
+          <div class="error">{{ form.username.errors }}</div>
+          {% endif %}
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="id_password">Password</label>
+          <div class="input-with-icon">
+            <i class="fas fa-lock"></i>
+            {{ form.password }}
+          </div>
+          {% if form.password.errors %}
+          <div class="error">{{ form.password.errors }}</div>
+          {% endif %}
+        </div>
+        <button type="submit">Login</button>
+        <p class="secondary-text">
+          Don't have an account?
+          <a href="{% url 'account' %}">Create Account</a>
+        </p>
+      </form>
+    </div>
+  </body>
+</html>

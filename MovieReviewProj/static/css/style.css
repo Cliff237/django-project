@@ -1,10 +1,139 @@
-*{
-   margin: 0;
-   padding: 0;
-   box-sizing: border-box;
-
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-body{
-   background-color: blue;
-   height: 100vh;
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(145deg, #0b1a2f 0%, #1f3a5f 100%);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  color: #f8fafc;
+}
+
+.form-wrapper {
+  width: min(96vw, 420px);
+  background: #14253f;
+  border: 1px solid #2a4365;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  padding: 1.25rem;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-wrapper h1,
+.form-wrapper h2 {
+  margin-bottom: 0.85rem;
+  color: #e2e8f0;
+}
+
+.form-group {
+  margin-bottom: 0.9rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.32rem;
+  color: #cbd5e1;
+  font-size: 0.94rem;
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon i {
+  position: absolute;
+  left: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.input-with-icon input,
+.input-with-icon select,
+.input-with-icon textarea {
+  width: 100%;
+  padding: 0.70rem 0.75rem 0.70rem 2.6rem;
+  border-radius: 8px;
+  border: 1px solid #3f5874;
+  background: #0f172a;
+  color: #e2e8f0;
+  font-size: 0.96rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
+}
+
+button[type="submit"] {
+  width: 100%;
+  margin-top: 0.85rem;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(120deg, #0284c7, #0ea5e9);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+
+button[type="submit"]:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.secondary-text {
+  text-align: center;
+  margin-top: 0.7rem;
+  font-size: 0.86rem;
+  color: #cbd5e1;
+}
+
+a {
+  color: #38bdf8;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #0ea5e9;
+  text-decoration: underline;
+}
+
+a:visited {
+  color: #7dd3fc;
+}
+
+@media (max-width: 500px) {
+  .form-wrapper {
+    padding: 1rem;
+  }
+  .input-with-icon input,
+  .input-with-icon select,
+  .input-with-icon textarea {
+    padding-left: 2.4rem;
+  }
 }
