@@ -4,10 +4,7 @@
 {% block title %}{{ movie.title }} - CineRate{% endblock %}
 
 {% block content %}
-    <a href="{% url 'movies:movie_list' %}" class="back-link">
-        <i class="fas fa-arrow-left"></i> Back to All Movies
-    </a>
-
+  
     <div class="movie-detail-grid">
         <!-- Poster -->
         <div class="poster-section">
@@ -19,6 +16,7 @@
                     <p>No Poster Available</p>
                 </div>
             {% endif %}
+            
         </div>
 
         <!-- Movie Info -->

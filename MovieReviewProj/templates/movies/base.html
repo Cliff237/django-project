@@ -8,11 +8,11 @@
     <title>{% block title %}Movie Reviews{% endblock %}</title>
     
     {% load static %}
-    <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/movies/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/movies/nav.css' %}">
     <link rel="stylesheet" href="{% static 'css/watchList/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/reviews/style.css' %}">
+    <link rel="stylesheet" href="{% static 'fotawesome/css/all.css' %}">
 </head>
 <body>
     <!-- Navbar -->
@@ -27,20 +27,12 @@
                     <i class="fas fa-film"></i> Movies
                 </a>
                 
-                <a href="{% url 'watchList:watchlist_view' %}" class="nav-link {% if request.resolver_match.app_name == 'watchlist' %}active{% endif %}">
-                    <i class="fas fa-heart"></i> Watchlist
+                <a href="{% url 'watchList:watchlist_view' %}" class="nav-link {% if request.resolver_match.app_name == 'watchList' %}active{% endif %}">
+                    <i class="fas fa-heart"></i> WatchList
                 </a>
 
-                <!-- Reviews link (optional - you can link to a general reviews page later) -->
-                <!-- <a href="#" class="nav-link"><i class="fas fa-comments"></i> Reviews</a> -->
             </div>
-
-            <!-- Right side (will be useful when accounts are added) -->
-            <div class="nav-right">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-user"></i> Guest
-                </a>
-            </div>
+            <div/>
         </div>
     </nav>
 

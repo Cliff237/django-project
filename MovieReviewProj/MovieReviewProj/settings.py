@@ -32,6 +32,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "unfold",                    # Must be at the very top
+    "unfold.contrib.filters",    # Optional but recommended
+    "unfold.contrib.forms",
     'mainApp.apps.MainAppConfig',
     'movies.apps.MoviesConfig',
     'accounts.apps.AccountsConfig',
@@ -125,3 +128,10 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+UNFOLD = {
+    "SITE_TITLE": "CineRate Admin",
+    "SITE_HEADER": "CineRate Administration",
+    "SITE_LOGO": None,                    # You can add your logo later
+    "THEME": "dark",                      # Force dark theme (matches your site)
+    "DASHBOARD_CALLBACK": "movies.admin.dashboard_callback",   # We'll create this soon
+}

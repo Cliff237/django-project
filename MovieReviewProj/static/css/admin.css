@@ -1,0 +1,161 @@
+/* ===================== ADMIN DASHBOARD - NEON STYLE ===================== */
+.admin-dashboard {
+    max-width: 1300px;
+    margin: 30px auto;
+    padding: 0 25px;
+}
+
+.dashboard-header h1 {
+    font-size: 3rem;
+    background: linear-gradient(to right, #00f7ff, #ff00cc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+}
+
+.dashboard-header p {
+    color: #aaa;
+    font-size: 1.25rem;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 40px 0;
+}
+
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 34px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.4s ease;
+}
+
+.action-btn.primary {
+    background: linear-gradient(to right, #00f7ff, #ff00cc);
+    color: #000;
+    box-shadow: 0 0 30px rgba(0, 247, 255, 0.6);
+}
+
+.action-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 45px rgba(0, 247, 255, 0.8);
+}
+
+.action-btn:not(.primary) {
+    border: 2px solid #00f7ff;
+    color: #00f7ff;
+}
+
+.action-btn:not(.primary):hover {
+    background: rgba(0, 247, 255, 0.15);
+}
+
+/* Stats */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+    margin-bottom: 60px;
+}
+
+.stat-card {
+    background: rgba(30, 30, 46, 0.95);
+    border: 1px solid rgba(0, 247, 255, 0.25);
+    border-radius: 20px;
+    padding: 28px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.stat-card:hover {
+    border-color: #00f7ff;
+    box-shadow: 0 0 35px rgba(0, 247, 255, 0.3);
+}
+
+.stat-icon {
+    font-size: 3.8rem;
+    color: #00f7ff;
+}
+
+.stat-info h3 {
+    color: #ccc;
+    margin-bottom: 6px;
+}
+
+.stat-number {
+    font-size: 2.9rem;
+    font-weight: 700;
+    color: white;
+}
+
+/* Panels */
+.two-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.panel {
+    background: rgba(30, 30, 46, 0.95);
+    border: 1px solid rgba(0, 247, 255, 0.2);
+    border-radius: 20px;
+    padding: 30px;
+}
+
+.panel h2 {
+    color: white;
+    margin-bottom: 25px;
+    font-size: 1.7rem;
+}
+
+.movie-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 18px;
+    background: rgba(20, 20, 35, 0.9);
+    border-radius: 16px;
+    text-decoration: none;
+    color: inherit;
+    transition: 0.3s;
+}
+
+.movie-row:hover {
+    background: rgba(0, 247, 255, 0.12);
+    transform: translateX(8px);
+}
+
+.poster-small {
+    width: 65px;
+    height: 90px;
+    border-radius: 10px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.poster-small img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.no-poster-icon {
+    font-size: 2.2rem;
+    color: #555;
+}
+
+.review-count {
+    margin-left: auto;
+    color: #00f7ff;
+    font-weight: 600;
+}

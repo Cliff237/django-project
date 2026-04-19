@@ -1,0 +1,100 @@
+{% extends "unfold/layouts/base.html" %}
+{% load static %}
+
+{% block title %}CineRate Admin Dashboard{% endblock %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="admin-dashboard">
+
+    <div class="dashboard-header">
+        <h1><i class="fas fa-film"></i> CineRate Admin</h1>
+        <p>Control Center • Platform Overview</p>
+    </div>
+
+    <div class="action-buttons">
+        <a href="{% url 'admin:movies_movie_add' %}" class="action-btn primary">
+            <i class="fas fa-plus"></i> Add New Movie
+        </a>
+        <a href="{% url 'admin:reviews_review_changelist' %}" class="action-btn">
+            <i class="fas fa-comments"></i> Moderate Reviews
+        </a>
+        <a href="{% url 'admin:movies_genre_changelist' %}" class="action-btn">
+            <i class="fas fa-tags"></i> Manage Genres
+        </a>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-film"></i></div>
+            <div class="stat-info">
+                <h3>Total Movies</h3>
+                <p class="stat-number">{{ total_movies }}</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-comments"></i></div>
+            <div class="stat-info">
+                <h3>Total Reviews</h3>
+                <p class="stat-number">{{ total_reviews }}</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-star"></i></div>
+            <div class="stat-info">
+                <h3>Average Rating</h3>
+                <p class="stat-number">{{ avg_rating_all }} ★</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-fire"></i></div>
+            <div class="stat-info">
+                <h3>Most Reviewed</h3>
+                <p class="stat-number">{{ most_reviewed|length }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="two-column">
+        <div class="panel">
+            <h2><i class="fas fa-clock"></i> Recently Added Movies</h2>
+            <div class="panel-content">
+                {% for movie in recent_movies %}
+                <a href="{% url 'admin:movies_movie_change' movie.pk %}" class="movie-row">
+                    <div class="poster-small">
+                        {% if movie.poster %}
+                            <img src="{{ movie.poster.url }}" alt="{{ movie.title }}">
+                        {% else %}
+                            <i class="fas fa-film no-poster-icon"></i>
+                        {% endif %}
+                    </div>
+                    <div class="movie-info">
+                        <h4>{{ movie.title }}</h4>
+                        <p>{{ movie.release_date|date:"d M Y" }} • {{ movie.get_movie_type_display }}</p>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2><i class="fas fa-trophy"></i> Most Reviewed Movies</h2>
+            <div class="panel-content">
+                {% for movie in most_reviewed %}
+                <a href="{% url 'admin:movies_movie_change' movie.pk %}" class="movie-row">
+                    <span class="rank">{{ forloop.counter }}</span>
+                    <div class="movie-info">
+                        <h4>{{ movie.title }}</h4>
+                    </div>
+                    <div class="review-count">{{ movie.review_count }} reviews</div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

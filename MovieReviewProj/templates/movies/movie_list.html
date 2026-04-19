@@ -78,6 +78,10 @@
                             {{ genre.name }}{% if not forloop.last %}, {% endif %}
                         {% endfor %}
                     </p>
+                
+                <a href="{% url 'watchList:add_to_watchlist' movie.slug %}" class="">
+                  <i class="fas fa-heart"></i> 
+                 </a>
                 </div>
             </div>
         {% empty %}
