@@ -1,0 +1,204 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background-color: #000000;
+    color: #ffffff;
+    line-height: 1.6;
+}
+
+/* Navbar */
+.navbar {
+    background: #000;
+    border-bottom: 1px solid #ffffff22;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1.2rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo-text {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+}
+
+.nav-links a {
+    color: #ddd;
+    text-decoration: none;
+    margin: 0 1.4rem;
+    font-weight: 500;
+}
+
+.nav-links a:hover {
+    color: #fff;
+}
+
+.auth-buttons .btn {
+    padding: 0.65rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-login {
+    color: #fff;
+    border: 1px solid #fff;
+}
+
+.btn-login:hover {
+    background: #fff;
+    color: #000;
+}
+
+.btn-signup {
+    background: #fff;
+    color: #000;
+}
+
+.btn-signup:hover {
+    background: #ddd;
+}
+
+/* Hero */
+.hero {
+    height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.9)), 
+               center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 75px;
+}
+
+.hero-content {
+    max-width: 850px;
+    padding: 2rem;
+}
+
+.hero h1 {
+    font-size: 4.8rem;
+    line-height: 1.1;
+    font-weight: 900;
+    margin-bottom: 1.2rem;
+}
+
+.tagline {
+    font-size: 1.45rem;
+    opacity: 0.85;
+    margin-bottom: 2.8rem;
+}
+
+.btn-primary {
+    background: #ffffff;
+    color: #000000;
+    padding: 1.1rem 2.4rem;
+    font-size: 1.15rem;
+    margin-right: 1rem;
+}
+
+.btn-primary:hover {
+    background: #e0e0e0;
+}
+
+.btn-secondary {
+    border: 2px solid #fff;
+    color: #fff;
+    padding: 1.1rem 2.4rem;
+    font-size: 1.15rem;
+}
+
+.btn-secondary:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+/* Other sections - same as before */
+.section-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 6rem 2rem;
+}
+
+h2 {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.features {
+    background: #0a0a0a;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+}
+
+.feature-card {
+    background: #111;
+    padding: 3rem 2rem;
+    border-radius: 16px;
+    text-align: center;
+    border: 1px solid #ffffff1a;
+}
+
+.icon {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.trending .movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+}
+
+.movie-poster {
+    height: 340px;
+    background: #1a1a1a;
+    border-radius: 14px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    border: 1px solid #333;
+}
+
+.footer {
+    background: #000;
+    border-top: 1px solid #ffffff22;
+    padding: 4rem 0 2rem;
+}
+
+.footer-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero h1 { font-size: 3.2rem; }
+    .nav-container { flex-direction: column; gap: 1rem; }
+    .hero-buttons { flex-direction: column; align-items: center; gap: 1rem; }
+}
