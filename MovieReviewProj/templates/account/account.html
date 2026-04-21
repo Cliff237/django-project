@@ -1,18 +1,89 @@
 {% load static %}
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <link rel="stylesheet" href="{% static 'fotawesome/css/all.min.css' %}">
-   <link href="{% static 'css/style.css' %}" rel="stylesheet">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Document</title>
-</head>
-<body>
-   enfoire toi aussi
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="{% static 'fotawesome/css/all.min.css' %}" />
+    <link href="{% static 'css/account.css' %}" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Account</title>
+  </head>
+  <body>
+    <div class="form-wrapper">
+      <h1>Create Account</h1>
+      {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      <form method="post" novalidate>
+        {% csrf_token %}
 
-   <br>
-   <i class="fas fa-star"> icon</i>
-</body>
+        <div class="form-group">
+          <label class="form-label" for="id_name">Name</label>
+          <div class="input-with-icon">
+            <i class="fas fa-user"></i>
+            {{ form.name }}
+          </div>
+          {% if form.name.errors %}
+          <div class="error">{{ form.name.errors }}</div>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="id_surname">Surname</label>
+          <div class="input-with-icon">
+            <i class="fas fa-id-card"></i>
+            {{ form.surname }}
+          </div>
+          {% if form.surname.errors %}
+          <div class="error">{{ form.surname.errors }}</div>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="id_email">Email</label>
+          <div class="input-with-icon">
+            <i class="fas fa-envelope"></i>
+            {{ form.email }}
+          </div>
+          {% if form.email.errors %}
+          <div class="error">{{ form.email.errors }}</div>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="id_password1">Password</label>
+          <div class="input-with-icon">
+            <i class="fas fa-lock"></i>
+            {{ form.password1 }}
+          </div>
+          {% if form.password1.errors %}
+          <div class="error">{{ form.password1.errors }}</div>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="id_password2"
+            >Confirm Password</label
+          >
+          <div class="input-with-icon">
+            <i class="fas fa-lock"></i>
+            {{ form.password2 }}
+          </div>
+          {% if form.password2.errors %}
+          <div class="error">{{ form.password2.errors }}</div>
+          {% endif %}
+        </div>
+
+        <button type="submit">Create account</button>
+        <p class="secondary-text">
+          Already have account? <a href="{% url 'login' %}">Login</a>
+        </p>
+      </form>
+    </div>
+  </body>
 </html>

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+AUTH_USER_MODEL = 'accounts.Accounts'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -126,6 +127,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
+<<<<<<< HEAD
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 UNFOLD = {
@@ -135,3 +137,7 @@ UNFOLD = {
     "THEME": "dark",                      # Force dark theme (matches your site)
     "DASHBOARD_CALLBACK": "movies.admin.dashboard_callback",   # We'll create this soon
 }
+=======
+# Login redirect URL
+LOGIN_REDIRECT_URL = 'movies'
+>>>>>>> origin/account
