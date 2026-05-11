@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
-from .forms import createAccountforms
+from .forms import createAccountForms
 from django.forms import BaseFormSet
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
@@ -23,7 +23,7 @@ class BaseAccountFormSet(BaseFormSet):
 
 class AccountPageView(CreateView):
     model = Accounts
-    form_class = createAccountforms
+    form_class = createAccountForms
     template_name = 'account/account.html'
 
     def form_valid(self, form):
@@ -37,7 +37,7 @@ class AccountPageView(CreateView):
 # Create your views here.
 def createAccount(request):
     if request.method == 'POST':
-        form = createAccountforms(request.POST)
+        form = createAccountForms(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.username = form.cleaned_data['email']
@@ -47,7 +47,7 @@ def createAccount(request):
             return redirect('movies:movie_list')
         else:
             messages.error(request, 'Please correct the errors below.')
-    form = createAccountforms()
+    form = createAccountForms()
     return render(request, 'account/account.html', {'form': form})
 
 def login_view(request):
@@ -56,7 +56,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('movie')  # GET redirect to movie page
+            return redirect('movies:movie_list')  # Redirect to movie list page
         else:
             messages.error(request, 'Invalid email or password.')
     else:
