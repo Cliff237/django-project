@@ -30,8 +30,9 @@ class AccountPageView(CreateView):
         user = form.save(commit=False)
         user.username = form.cleaned_data['email']
         user.save()
-        messages.success(self.request, 'Account created successfully! Please log in.')
-        return redirect('login')
+        login(self.request, user)
+        messages.success(self.request, 'Account created successfully!')
+        return redirect('movies:movie_list')
 
 # Create your views here.
 def createAccount(request):
@@ -41,8 +42,9 @@ def createAccount(request):
             user = form.save(commit=False)
             user.username = form.cleaned_data['email']
             user.save()
-            messages.success(request, 'Account created successfully! Please log in.')
-            return redirect('login')
+            login(request, user)
+            messages.success(request, 'Account created successfully!')
+            return redirect('movies:movie_list')
         else:
             messages.error(request, 'Please correct the errors below.')
     form = createAccountforms()
