@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Movie Review{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extrahead %}{% endblock %}
+</head>
+<body>
+    <!-- Desktop toolbar: chunky OS-style navigation controls -->
+    <nav class="navbar" aria-label="Main navigation">
+        <div class="nav-container">
+            <span class="logo-text">⬤ Movie Review</span>
+            <div class="nav-links">
+                <a href="/" class="btn">Home</a>
+                <a href="/movies/" class="btn">Movies</a>
+                <a href="/movies/reviews" class="btn">Reviews</a>
+                <a href="/accounts/" class="btn">Account</a>
+                <a href="/watchList/" class="btn">Watch List</a>
+                <a href="#" class="btn btn--secondary">Community</a>
+            </div>
+            <div class="auth-buttons"></div>
+        </div>
+    </nav>
+
+    <main class="wrap" id="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer window" role="contentinfo">
+        <div class="window-body">
+            <span class="logo-text mono">MovieReview</span>
+            <p>© 2026 MovieReview - Python Web App</p>
+        </div>
+    </footer>
+</body>
+</html>

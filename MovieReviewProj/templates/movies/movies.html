@@ -1,1 +1,21 @@
-<h1>movie page</h1>
+{% extends "base.html" %}
+{% block title %}Movies - Movie Review{% endblock %}
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'fotawesome/css/all.min.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="section">
+        <div class="wrap">
+            <div class="window window--stacked">
+                <div class="window-titlebar">Movies</div>
+                <div class="window-body">
+                    <h1>movie page</h1>
+                    <div class="btn-group" style="margin-top: var(--space-xl);">
+                        <a href="/" class="btn btn--secondary">Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

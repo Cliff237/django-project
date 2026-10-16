@@ -1,1 +1,18 @@
-<h1>review</h1>
+{% extends "base.html" %}
+{% block title %}Reviews - Movie Review{% endblock %}
+
+{% block content %}
+    <section class="section">
+        <div class="wrap">
+            <div class="window window--stacked">
+                <div class="window-titlebar">Reviews</div>
+                <div class="window-body">
+                    <h1>review</h1>
+                    <div class="btn-group" style="margin-top: var(--space-xl);">
+                        <a href="/" class="btn btn--secondary">Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

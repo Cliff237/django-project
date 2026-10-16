@@ -1,18 +1,24 @@
 {% load static %}
+{% extends "base.html" %}
+{% block title %}Account - Movie Review{% endblock %}
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'fotawesome/css/all.min.css' %}">
+{% endblock %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <link rel="stylesheet" href="{% static 'fotawesome/css/all.min.css' %}">
-   <link href="{% static 'css/style.css' %}" rel="stylesheet">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Document</title>
-</head>
-<body>
-   enfoire toi aussi
-
-   <br>
-   <i class="fas fa-star"> icon</i>
-</body>
-</html>
+{% block content %}
+    <section class="section">
+        <div class="wrap">
+            <div class="window window--stacked">
+                <div class="window-titlebar">Account</div>
+                <div class="window-body" style="text-align: center;">
+                    <p>enfoire toi aussi</p>
+                    <br>
+                    <i class="fas fa-star"> icon</i>
+                    <div class="btn-group" style="margin-top: var(--space-xl);">
+                        <a href="/" class="btn btn--secondary">Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
