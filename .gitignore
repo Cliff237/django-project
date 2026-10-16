@@ -1,0 +1,46 @@
+# Python / Django
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+env/
+ENV/
+env.old/
+
+# uv / venv
+.venv/
+.uv-cache/
+
+# Django
+*.db
+*.db-journal
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+collectstatic/
+
+# Local environment / secrets
+.env
+.env.local
+.env.*.local
+*.secret.py
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Packaging
+build/
+dist/
+*.egg-info/
+.eggs/
