@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Movie Review{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'fotawesome/css/all.min.css' %}">
     {% block extrahead %}{% endblock %}
 </head>
 <body>
     <!-- Desktop toolbar: chunky OS-style navigation controls -->
     <nav class="navbar" aria-label="Main navigation">
         <div class="nav-container">
-            <span class="logo-text">⬤ Movie Review</span>
+            <span class="logo-text"><i class="fas fa-film"></i> Movie Review</span>
             <div class="nav-links">
                 <a href="/" class="btn">Home</a>
                 <a href="/movies/" class="btn">Movies</a>
