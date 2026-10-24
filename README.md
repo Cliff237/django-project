@@ -1,5 +1,7 @@
 # django-project
 
+[![CI](https://github.com/fabiljayson/django-project/actions/workflows/ci.yml/badge.svg)](https://github.com/fabiljayson/django-project/actions/workflows/ci.yml)
+
 A Django movie-review web application styled with the **django-project Design System** (`DESIGN.md`) — an 80s retro-desktop aesthetic (chunky OS buttons, window chrome, pixel borders, grid-paper backgrounds, Georgia serif typography, Sunset Pop color palette).
 
 ## What it is
