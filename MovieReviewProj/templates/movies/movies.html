@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load movie_extras %}
 {% block title %}Movies - Movie Review{% endblock %}
 {% block extrahead %}
     <link rel="stylesheet" href="{% static 'fotawesome/css/all.min.css' %}">
@@ -11,10 +12,128 @@
             <div class="window window--stacked">
                 <div class="window-titlebar">Movies</div>
                 <div class="window-body">
-                    <h1>movie page</h1>
-                    <div class="btn-group" style="margin-top: var(--space-xl);">
-                        <a href="/" class="btn btn--secondary">Back to Home</a>
+                    <h1>Movies Catalog</h1>
+                    <div class="movie-search-filters">
+                        <form method="get" action="{% url 'movies-list' %}" class="search-form">
+                            <div class="field">
+                                <label for="search">Search movies:</label>
+                                <input type="text" id="search" name="q" value="{{ current_query }}" placeholder="Enter movie title">
+                            </div>
+                            <div class="field">
+                                <label for="genre">Genre:</label>
+                                <select id="genre" name="genre">
+                                    <option value="">All Genres</option>
+                                    {% for genre in genres %}
+                                        <option value="{{ genre.slug }}" {% if genre.slug == current_genre %}selected{% endif %}>{{ genre.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="year">Release Year:</label>
+                                <select id="year" name="year">
+                                    <option value="">All Years</option>
+                                    {% for year in years %}
+                                        <option value="{{ year|date:"Y" }}" {% if year|date:"Y" == current_year %}selected{% endif %}>{{ year|date:"Y" }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="sort">Sort by:</label>
+                                <select id="sort" name="sort">
+                                    <option value="" {% if current_sort == "" %}selected{% endif %}>Release Date (Newest)</option>
+                                    <option value="title" {% if current_sort == "title" %}selected{% endif %}>Title (A-Z)</option>
+                                    <option value="release_date" {% if current_sort == "release_date" %}selected{% endif %}>Release Date (Oldest)</option>
+                                    <option value="rating" {% if current_sort == "rating" %}selected{% endif %}>Rating (Highest)</option>
+                                    <option value="-rating" {% if current_sort == "-rating" %}selected{% endif %}>Rating (Lowest)</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn--primary">Apply Filters</button>
+                            <a href="{% url 'movies-list' %}" class="btn btn--secondary">Reset</a>
+                        </form>
                     </div>
+                    {% if movies %}
+                        <div class="movies-grid">
+                            {% for movie in movies %}
+                                <div class="movie-card window">
+                                    <div class="window-titlebar">{{ movie.title }}</div>
+                                    <div class="window-body">
+                                        {% if movie.poster %}
+                                            <img src="{{ movie.poster.url }}" alt="{{ movie.title }} poster" class="movie-poster">
+                                        {% else %}
+                                            <div class="movie-poster-placeholder">
+                                                <i class="fas fa-film"></i>
+                                            </div>
+                                        {% endif %}
+                                        <div class="movie-info">
+                                            <p class="meta">
+                                                {% if movie.release_date %}
+                                                    {{ movie.release_date|date:"Y" }}
+                                                {% else %}
+                                                    Year unknown
+                                                {% endif %}
+                                                {% if movie.genres.all %}
+                                                    <span class="genres">
+                                                        {% for genre in movie.genres.all|slice:":2" %}
+                                                            {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                                                        {% endfor %}
+                                                        {% if movie.genres.all|length > 2 %} and more{% endif %}
+                                                    </span>
+                                                {% endif %}
+                                            </p>
+                                            {% if movie.synopsis %}
+                                                <p class="synopsis">{{ movie.synopsis|truncatewords:20 }}</p>
+                                            {% endif %}
+                                        </div>
+                                        <div class="movie-stats">
+                                            <div class="stat">
+                                                {% if movie.reviews.all %}
+                                                    {% with movie.reviews.all|avg:"rating" as avg_rating %}
+                                                        <div class="rating-small">
+                                                            {% for i in "12345" %}
+                                                                {% if forloop.counter <= avg_rating|floor %}
+                                                                    <i class="fas fa-star"></i>
+                                                                {% elif avg_rating > forloop.counter|subtract:"0.5" %}
+                                                                    <i class="fas fa-star-half-alt"></i>
+                                                                {% else %}
+                                                                    <i class="far fa-star"></i>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </div>
+                                                        <span class="rating-num">{{ avg_rating|floatformat:1 }}</span>
+                                                    {% endwith %}
+                                                {% else %}
+                                                    <p>No ratings</p>
+                                                {% endif %}
+                                            </div>
+                                            <div class="stat">
+                                                <span class="review-count">{{ movie.reviews.count }} review{{ movie.reviews.count|pluralize }}</span>
+                                            </div>
+                                        </div>
+                                        <a href="{{ movie.get_absolute_url }}" class="btn btn--block">View Details</a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="empty-state">No movies match your search criteria.</p>
+                    {% endif %}
+                    {% if movies.has_other_pages %}
+                        <div class="pagination">
+                            <span class="step-links">
+                                {% if movies.has_previous %}
+                                    <a href="?{% query_transform page=movies.previous_page_number %}{% if current_query %}&q={{ current_query }}{% endif %}{% if current_genre %}&genre={{ current_genre }}{% endif %}{% if current_year %}&year={{ current_year }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" class="btn btn--secondary">Previous</a>
+                                {% endif %}
+
+                                <span class="current">
+                                    Page {{ movies.number }} of {{ movies.paginator.num_pages }}
+                                </span>
+
+                                {% if movies.has_next %}
+                                    <a href="?{% query_transform page=movies.next_page_number %}{% if current_query %}&q={{ current_query }}{% endif %}{% if current_genre %}&genre={{ current_genre }}{% endif %}{% if current_year %}&year={{ current_year }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" class="btn btn--secondary">Next</a>
+                                {% endif %}
+                            </span>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

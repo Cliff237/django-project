@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Log In - Movie Review{% endblock %}
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'fotawesome/css/all.min.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="section">
+        <div class="wrap">
+            <div class="window window--stacked">
+                <div class="window-titlebar">Log In</div>
+                <div class="window-body">
+                    {% if form.errors %}
+                        <p class="error-message">Your username and password didn't match. Please try again.</p>
+                    {% endif %}
+                    {% if next %}
+                        {% if user.is_authenticated %}
+                            <p class="error-message">
+                                Your account doesn't have access to this page. To proceed,
+                                please log in with an account that has access.
+                            </p>
+                        {% else %}
+                            <p class="error-message">
+                                Please log in to see this page.
+                            </p>
+                        {% endif %}
+                    {% endif %}
+                    <form method="post" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <div class="field">
+                            <label for="id_username">Username:</label>
+                            {{ form.username }}
+                        </div>
+                        <div class="field">
+                            <label for="id_password">Password:</label>
+                            {{ form.password }}
+                        </div>
+                        <div class="btn-group">
+                            <input type="submit" value="Log in" class="btn btn--primary">
+                            <input type="hidden" name="next" value="{{ next }}">
+                        </div>
+                        {# Assumes you setup the password_reset view in your URLconf #}
+                        <p class="login-link">
+                            <a href="{% url 'password_reset' %}">Forgotten password?</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

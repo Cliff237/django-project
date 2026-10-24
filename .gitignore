@@ -44,3 +44,6 @@ build/
 dist/
 *.egg-info/
 .eggs/
+
+# Dev logs
+server.log

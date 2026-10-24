@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ movie.title }} - Movie Review{% endblock %}
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'fotawesome/css/all.min.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="section">
+        <div class="wrap">
+            <div class="window window--stacked">
+                <div class="window-titlebar">{{ movie.title }}</div>
+                <div class="window-body">
+                    <div class="movie-detail">
+                        {% if movie.poster %}
+                            <img src="{{ movie.poster.url }}" alt="{{ movie.title }} poster" class="movie-poster">
+                        {% else %}
+                            <div class="movie-poster-placeholder">
+                                <i class="fas fa-film"></i>
+                                <p>No poster available</p>
+                            </div>
+                        {% endif %}
+                        <div class="movie-info">
+                            <h2>{{ movie.title }}</h2>
+                            <div class="meta">
+                                <span class="release-date">
+                                    {% if movie.release_date %}
+                                        {{ movie.release_date|date:"F d, Y" }}
+                                    {% else %}
+                                        Release date unknown
+                                    {% endif %}
+                                </span>
+                                {% if movie.genres.all %}
+                                    <span class="genres">
+                                        Genres:
+                                        {% for genre in movie.genres.all %}
+                                            <a href="{% url 'movies-list' %}?genre={{ genre.slug }}">{{ genre.name }}</a>{% if not forloop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </span>
+                                {% endif %}
+                            </div>
+                            <p class="synopsis">{{ movie.synopsis|linebreaks }}</p>
+                        </div>
+                    </div>
+                    <div class="movie-stats">
+                        <div class="stat">
+                            <h3>Rating</h3>
+                            <div class="rating-display">
+                                {% if avg_rating > 0 %}
+                                    <div class="stars">
+                                        {% for i in "12345" %}
+                                            {% if forloop.counter <= avg_rating|floor %}
+                                                <i class="fas fa-star"></i>
+                                            {% elif avg_rating > forloop.counter|subtract:"0.5" %}
+                                                <i class="fas fa-star-half-alt"></i>
+                                            {% else %}
+                                                <i class="far fa-star"></i>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <span class="rating-num">{{ avg_rating }}/5</span>
+                                {% else %}
+                                    <p>No ratings yet</p>
+                                {% endif %}
+                            </div>
+                            <span class="review-count">{{ review_count }} review{{ review_count|pluralize }}</span>
+                        </div>
+                    </div>
+                    <div class="movie-actions">
+                        {% if user.is_authenticated %}
+                            <form method="post" action="{% url 'reviews-add' %}" class="review-form">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                                <button type="submit" class="btn btn--primary">Submit Review</button>
+                            </form>
+                        {% else %}
+                            <p class="login-prompt">
+                                <a href="{% url 'account' %}" class="btn btn--secondary">Log in to rate and review</a>
+                            </p>
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                            <form method="post" action="{% url 'watchlist-toggle' %}" class="watchlist-form">
+                                {% csrf_token %}
+                                <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                                {% if in_watchlist %}
+                                    <button type="submit" class="btn btn--danger">Remove from Watchlist</button>
+                                {% else %}
+                                    <button type="submit" class="btn btn--primary">Add to Watchlist</button>
+                                {% endif %}
+                            </form>
+                        {% else %}
+                            <p class="login-prompt">
+                                <a href="{% url 'account' %}" class="btn btn--secondary">Log in to manage your watchlist</a>
+                            </p>
+                        {% endif %}
+                    </div>
+                    {% if reviews %}
+                        <div class="movie-reviews">
+                            <h3>Reviews</h3>
+                            <div class="reviews-list">
+                                {% for review in reviews %}
+                                    <div class="review window">
+                                        <div class="window-titlebar">
+                                            <span class="review-title">{{ review.user.username }}</span>
+                                            <span class="review-meta">
+                                                {{ review.created_at|date:"M d, Y" }}
+                                            </span>
+                                        </div>
+                                        <div class="window-body">
+                                            <div class="review-rating">
+                                                {% for i in "12345" %}
+                                                    {% if forloop.counter <= review.rating %}
+                                                        <i class="fas fa-star"></i>
+                                                    {% else %}
+                                                        <i class="far fa-star"></i>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <span class="rating-value">{{ review.rating }}/5</span>
+                                            </div>
+                                            <p class="review-text">{{ review.review_text|linebreaks }}</p>
+                                            {% if user.is_authenticated and review.user == user %}
+                                                <div class="review-actions">
+                                                    <a href="{% url 'reviews-edit' pk=review.pk %}" class="btn btn--secondary">Edit</a>
+                                                    <form method="post" action="{% url 'reviews-delete' pk=review.pk %}" style="display: inline;">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn--danger">Delete</button>
+                                                    </form>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <p class="empty-state">No reviews yet. Be the first to submit a review!</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

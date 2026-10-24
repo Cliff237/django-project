@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Edit Review - Movie Review{% endblock %}
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'fotawesome/css/all.min.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="section">
+        <div class="wrap">
+            <div class="window window--stacked">
+                <div class="window-titlebar">Edit Your Review</div>
+                <div class="window-body">
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn--primary">Update Review</button>
+                        <a href="{% url 'movie-detail' slug=review.movie.slug %}" class="btn btn--secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

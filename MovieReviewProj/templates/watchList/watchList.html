@@ -1,16 +1,83 @@
 {% extends "base.html" %}
-{% block title %}Watch List - Movie Review{% endblock %}
+{% load static %}
+{% block title %}My Watchlist - Movie Review{% endblock %}
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'fotawesome/css/all.min.css' %}">
+{% endblock %}
 
 {% block content %}
     <section class="section">
         <div class="wrap">
             <div class="window window--stacked">
-                <div class="window-titlebar">Watch List</div>
+                <div class="window-titlebar">My Watchlist</div>
                 <div class="window-body">
-                    <h1>watch list</h1>
-                    <div class="btn-group" style="margin-top: var(--space-xl);">
-                        <a href="/" class="btn btn--secondary">Back to Home</a>
-                    </div>
+                    {% if watchlist_items %}
+                        <div class="watchlist-grid">
+                            {% for item in watchlist_items %}
+                                <div class="watchlist-item window">
+                                    <div class="window-titlebar">{{ item.movie.title }}</div>
+                                    <div class="window-body">
+                                        {% if item.movie.poster %}
+                                            <img src="{{ item.movie.poster.url }}" alt="{{ item.movie.title }} poster" class="movie-poster">
+                                        {% else %}
+                                            <div class="movie-poster-placeholder">
+                                                <i class="fas fa-film"></i>
+                                            </div>
+                                        {% endif %}
+                                        <div class="movie-info">
+                                            <p class="meta">
+                                                {% if item.movie.release_date %}
+                                                    {{ item.movie.release_date|date:"Y" }}
+                                                {% else %}
+                                                    Year unknown
+                                                {% endif %}
+                                                {% if item.movie.genres.all %}
+                                                    <span class="genres">
+                                                        {% for genre in item.movie.genres.all|slice:":2" %}
+                                                            {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                                                        {% endfor %}
+                                                        {% if item.movie.genres.all|length > 2 %} and more{% endif %}
+                                                    </span>
+                                                {% endif %}
+                                            </p>
+                                        </div>
+                                        <div class="movie-actions">
+                                            <form method="post" action="{% url 'watchlist-toggle' %}" class="watchlist-form">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="movie_id" value="{{ item.movie.id }}">
+                                                <button type="submit" class="btn btn--danger">Remove from Watchlist</button>
+                                            </form>
+                                            <a href="{{ item.movie.get_absolute_url }}" class="btn btn--primary">View Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="empty-state">Your watchlist is empty. Add movies to your watchlist to see them here.</p>
+                    {% endif %}
+                    {% if watchlist_items.has_other_pages %}
+                        <div class="pagination">
+                            <span class="step-links">
+                                {% if watchlist_items.has_previous %}
+                                    <a href="?{% query_transform page=watchlist_items.previous_page_number %}" class="btn btn--secondary">Previous</a>
+                                {% endif %}
+
+                                <span class="current">
+                                    Page {{ watchlist_items.number }} of {{ watchlist_items.paginator.num_pages }}
+                                </span>
+
+                                {% if watchlist_items.has_next %}
+                                    <a href="?{% query_transform page=watchlist_items.next_page_number %}" class="btn btn--secondary">Next</a>
+                                {% endif %}
+                            </span>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}>
                 </div>
             </div>
         </div>
