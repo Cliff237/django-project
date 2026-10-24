@@ -30,7 +30,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: pip
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r MovieReviewProj/requirements.txt
       - name: Django system check
         run: python MovieReviewProj/manage.py check
       - name: Migrations are in sync
