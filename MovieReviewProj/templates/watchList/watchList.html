@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+{% load movie_extras %}{% load static %}
 {% block title %}My Watchlist - Movie Review{% endblock %}
 {% block extrahead %}
     <link rel="stylesheet" href="{% static 'fotawesome/css/all.min.css' %}">
@@ -73,11 +73,6 @@
                             </span>
                         </div>
                     {% endif %}
-                </div>
-            </div>
-        </div>
-    </section>
-{% endblock %}>
                 </div>
             </div>
         </div>
